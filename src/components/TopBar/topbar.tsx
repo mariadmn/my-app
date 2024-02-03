@@ -3,7 +3,7 @@ import Clock from "./Clock/clock";
 import SearchBox from "./Search/search";
 import styled from "styled-components";
 import Modal from "./Settings/settings";
-import useTheme, { lightTheme } from "../../theme";
+import useTheme, { lightTheme, darkTheme } from "../../theme";
 import ThemeSwitch from "../../assets/weather-icons/theme-switch.svg";
 import { useSettings } from "./Settings/settingsState";
 import SettingsModal from "./Settings/settings";
@@ -14,7 +14,6 @@ const StyledTopBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* font-weight: 500; */
 `;
 
 const Button = styled.button`
@@ -25,7 +24,7 @@ const Button = styled.button`
   color: ${({ theme }) => theme.text};
 
   &:hover {
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.blue};
   }
 `;
 
@@ -48,40 +47,33 @@ const StyledThemeSwitchIcon = styled(ThemeSwitch)`
 const TopBar = () => {
   //Handle the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const saveModal = () => {
-    setIsModalOpen(false);
-  }
 
   //Handle the theme
-  const { toggleTheme } = useTheme();
-
-  //Handle the clock
-  const { timeFormat } = useSettings();
+  const { toggleTheme, theme } = useTheme();
 
   return (
     <StyledTopBar>
       <Clock />
       <SearchBox onSearch={(query) => console.log(query)} />
       <Button onClick={openModal}>Settings</Button>
-      <Modal isOpen={isModalOpen} onClose={closeModal} onSave={saveModal} />
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
 
-      {/* <button
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-          onClick={toggleTheme}
-        >
-          <StyledThemeSwitchIcon />
-        </button> */}
+      <button
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+        onClick={toggleTheme}
+      >
+        {theme.background === lightTheme.background ? "Light Theme" : "Dark Theme"}
+      </button> 
+
     </StyledTopBar>
   );
 }

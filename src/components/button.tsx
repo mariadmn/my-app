@@ -10,7 +10,7 @@ type ButtonProps = {
 
 const StyledButton = styled.button<ButtonProps>`
   background: ${({ theme }) => theme.backgorund};
-  border: 2px solid ${({ theme }) => theme.accent};
+  border: 2px solid ${({ theme }) => theme.blue};
   width: 100%;
   border-radius: 10px;
   padding: 14px;
@@ -20,7 +20,7 @@ const StyledButton = styled.button<ButtonProps>`
 
   &:hover {
     background-color: ${({ theme }) => theme.text};
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.blue};
     border-color: ${({ theme }) => theme.text};
   }
 
@@ -42,7 +42,7 @@ const StyledButton = styled.button<ButtonProps>`
     props.isStyled &&
     css`
       background-color: ${({ theme }) => theme.text};
-      color: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.blue};
       border-color: ${({ theme }) => theme.text};
     `}
 `;

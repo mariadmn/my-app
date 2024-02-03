@@ -43,33 +43,32 @@ const StyledModalTitle = styled.h2`
 
 type ModalProps = {
   isOpen: boolean;
-  onSave: () => void;
   onClose: () => void;
 };
 
 const Modal: React.FC<ModalProps> = (props) => {
   const { timeFormat, temperatureunits, setTimeFormat, setUnits } = useSettings();
   const { isOpen, onClose } = props;
-  const [localUnits, setLocalUnits] = useState<TemperatureUnit>(temperatureunits);
-  const [localTimeFormat, setLocalTimeFormat] = useState<string>(timeFormat);
-  const modalRef = useRef<HTMLDivElement>(null);
+  //Local Variables
+  const [tempUnits, setTempUnits] = useState<TemperatureUnit>(temperatureunits);
+  const [tempTimeFormat, setTempTimeFormat] = useState<string>(timeFormat);
 
   useEffect(() => {
     if (props.isOpen) {
-      setLocalUnits(temperatureunits);
-      setLocalTimeFormat(timeFormat);
+      setTempUnits(temperatureunits);
+      setTempTimeFormat(timeFormat);
     }
   }, [isOpen, temperatureunits, timeFormat]);
 
   const saveSettings = () => {
-    setUnits(localUnits);
-    setTimeFormat(localTimeFormat as '24h' | 'AM/PM');
+    setUnits(tempUnits);
+    setTimeFormat(tempTimeFormat as '24h' | 'AM/PM');
     onClose();
   };
 
   const handleClose = () => {
-    setLocalUnits(temperatureunits);
-    setLocalTimeFormat(timeFormat);
+    setTempUnits(temperatureunits);
+    setTempTimeFormat(timeFormat);
     onClose();
   };
 
@@ -77,22 +76,22 @@ const Modal: React.FC<ModalProps> = (props) => {
 
   return (
     <Overlay>
-      <ModalContainer ref={modalRef}>
+      <ModalContainer>
         <StyledModalTitle>Settings</StyledModalTitle>
         <RowContainer>
           <label>
             Time Format:
             <Button
               label={"24H"}
-              onClick={() => (setLocalTimeFormat("24h"))}
+              onClick={() => (setTempTimeFormat("24h"))}
               size="sm"
-              isStyled={localTimeFormat === "24h"}
+              isStyled={tempTimeFormat === "24h"}
             />
             <Button
               label={"AM/PM"}
-              onClick={() => (setLocalTimeFormat("AM/PM"))}
+              onClick={() => (setTempTimeFormat("AM/PM"))}
               size="sm"
-              isStyled={localTimeFormat === "AM/PM"}
+              isStyled={tempTimeFormat === "AM/PM"}
             />
           </label>
         </RowContainer>
@@ -101,19 +100,19 @@ const Modal: React.FC<ModalProps> = (props) => {
             Temperature Units:
             <Button
               label={"Metric"}
-              onClick={() => (setLocalUnits('metric'))}
+              onClick={() => (setTempUnits('metric'))}
               size="sm"
               isStyled={temperatureunits === 'metric'}
             />
             <Button
               label={"Imperial"}
-              onClick={() => (setLocalUnits('imperial'))}
+              onClick={() => (setTempUnits('imperial'))}
               size="sm"
               isStyled={temperatureunits === 'imperial'}
             />
             <Button
               label={"Standard"}
-              onClick={() => (setLocalUnits('standard'))}
+              onClick={() => (setTempUnits('standard'))}
               size="sm"
               isStyled={temperatureunits === 'standard'}
             />

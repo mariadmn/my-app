@@ -36,7 +36,7 @@ const useTheme= create<ThemeState>()(
       theme: getInitialTheme(),
       toggleTheme: () =>
         set((state) => ({
-          theme: state.theme.background === "#FFF" ? darkTheme : lightTheme,
+          theme: state.theme === lightTheme ? darkTheme : lightTheme,
         })),
     }),
     {
