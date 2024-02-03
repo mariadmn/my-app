@@ -15,10 +15,9 @@ const GridContainer = styled.div`
 `;
 
 const CityGrid: React.FC = () => {
-  const { visibleCities, selectCity, selectedCity } = useCityState();
-
+  const { visibleCities, setSelectedCity, selectedCity, disabledCities } = useCityState();
   const handleCityClick = (city: Cities) => {
-    selectCity(city);
+    setSelectedCity(city);
   };
 
   return (
@@ -33,7 +32,7 @@ const CityGrid: React.FC = () => {
           //   animate={{ opacity: 1, scale: 1 }}
           //   exit={{ opacity: 0, scale: 0.75, transition: { duration: 0.2 } }}
           // >
-            <Button label={city.name} isStyled={selectedCity?.name === city.name} onClick={() => handleCityClick(city)} />
+            <Button label={city.name} isStyled={selectedCity?.name === city.name} onClick={() => handleCityClick(city)} disabled={disabledCities.includes(city)} />
           // </motion.div>
         ))}
       {/* </AnimatePresence> */}

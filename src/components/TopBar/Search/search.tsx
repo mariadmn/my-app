@@ -1,11 +1,7 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import CloseCircle from '../../../assets/weather-icons/close-circle.svg';
 import { useCityState } from '../../cityState';
-
-interface SearchBoxProps {
-    onSearch: (query: string) => void;
-}
 
 const StyledCloseCircle = styled(CloseCircle)`
     position: absolute;
@@ -28,39 +24,49 @@ const Input= styled.input`
 
 //TODO: change to my theme
 //TODO: handle the problem with the icon
-const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
-    const { visibleCities, selectCity, selectedCity, setVisibleCities } = useCityState();
-    const [searchQuery, setSearchQuery] = useState<string>('');
+const Search: React.FC = () => {
+    const { visibleCities, setSelectedCity, setVisibleCities, setDisabledCities } = useCityState();
+    //Make a copy of the original cities
     const [originalCities] = useState(visibleCities);
     const [searchInput, setSearchInput] = useState("");
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value);
-        setSearchInput(e.target.value);
+    const handleSearch = (input: string) => {
+      if(input === ""){
+        setVisibleCities(originalCities);
+        setDisabledCities([]);
+      }else{
         const filteredCities = originalCities.filter((city) =>
-          city.name.toLowerCase().includes(e.target.value.toLowerCase())
+          !city.name.toLowerCase().includes(input.toLowerCase())
         );
-        setVisibleCities(filteredCities);
+        setDisabledCities(filteredCities);
+      }
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            onSearch(searchQuery);
+    //handle enter key
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+          const filterCity = originalCities.filter((city) =>
+            city.name.toLowerCase() === searchInput.toLowerCase()
+          );
+            if(filterCity.length > 0){
+              setSelectedCity(filterCity[0]);
+            }
         }
     };
 
     const handleClear = () => {
-        setSearchQuery("");
+        setSearchInput("");
         setVisibleCities(originalCities);
+        setDisabledCities([]);
     };
 
     const handleSubmit= (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      const foundCity = visibleCities.find(
+      const foundCity = originalCities.find(
         (city) => city.name.toLowerCase() === searchInput.toLowerCase()
       );
       if (foundCity) {
-        selectCity(foundCity);
+        setSelectedCity(foundCity);
       }
     };
 
@@ -71,28 +77,31 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
           <Input
             type="text"
             placeholder="Search"
-            value={searchQuery}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
+            value={searchInput}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setSearchInput(e.target.value);
+              handleSearch(e.target.value);
+            }}
+            onKeyDown={handleKeyPress}
           />
+           <button
+            type="button"
+            onClick={handleClear}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              border: "none",
+              background: "none",
+            }}
+          >
+            x
+          </button>
         </form>
-        <button
-        type="button"
-        onClick={handleClear}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          border: "none",
-          background: "none",
-        }}
-      >
-        x
-      </button>
       </div>
     </div>
   );
 };
 
-export default SearchBox;
+export default Search;
 
 

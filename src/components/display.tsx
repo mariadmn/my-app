@@ -1,5 +1,6 @@
 import CityGrid from "./CityGrid/cityGrid";
 import Forecast from "./Forecast/forecast";
+import PeriodSelector from "./Forecast/periodSelector";
 import TopBar from "./TopBar/topbar";
 import { useCityState } from "./cityState";
 
@@ -9,8 +10,7 @@ const Display = () => {
     return (
         <div>
             <TopBar />
-            <Forecast isCurrent={isCurrent} is5Days={undefined}/>
-            <button>5 days forecast</button>
+            <Forecast isCurrent={isCurrent}/>
             <CityGrid />
         </div>
     );

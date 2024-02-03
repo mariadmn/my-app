@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Clock from "./Clock/clock";
-import SearchBox from "./Search/search";
+import Search from "./Search/search";
 import styled from "styled-components";
 import Modal from "./Settings/settings";
-import useTheme, { lightTheme, darkTheme } from "../../theme";
-import ThemeSwitch from "../../assets/weather-icons/theme-switch.svg";
-import { useSettings } from "./Settings/settingsState";
-import SettingsModal from "./Settings/settings";
+import useTheme, { lightTheme } from "../../theme";
+// import ThemeSwitch from "../../assets/weather-icons/theme-switch.svg";
+// import { useSettings } from "./Settings/settingsState";
+// import SettingsModal from "./Settings/settings";
 
 const StyledTopBar = styled.div`
   padding-top: 1rem;
@@ -28,21 +28,21 @@ const Button = styled.button`
   }
 `;
 
-const StyledIconButton = styled(Button)`
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// const StyledIconButton = styled(Button)`
+//   padding: 0;
+//   margin: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
-const StyledThemeSwitchIcon = styled(ThemeSwitch)`
-  height: 1rem;
-  width: 1rem;
-  border-radius: 50%;
-  background: #fff;
-  border: solid 1px white;
-`;
+// const StyledThemeSwitchIcon = styled(ThemeSwitch)`
+//   height: 1rem;
+//   width: 1rem;
+//   border-radius: 50%;
+//   background: #fff;
+//   border: solid 1px white;
+// `;
 
 const TopBar = () => {
   //Handle the modal
@@ -60,10 +60,10 @@ const TopBar = () => {
   return (
     <StyledTopBar>
       <Clock />
-      <SearchBox onSearch={(query) => console.log(query)} />
+      <Search />
       <Button onClick={openModal}>Settings</Button>
       <Modal isOpen={isModalOpen} onClose={closeModal} />
-
+      {/* TODO: make this button work */}
       <button
         style={{
           display: "flex",

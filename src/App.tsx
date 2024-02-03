@@ -4,8 +4,9 @@ import { ThemeProvider } from 'styled-components';
 import Display from './components/display';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
-import axios from 'axios';
-import  useTheme from './theme';
+import useTheme from './theme';
+import CurrentForecast from './components/Forecast/currentForecast';
+import FiveDaysForecast from './components/Forecast/5dayforecast';
 
 function App() {
 
@@ -15,7 +16,14 @@ function App() {
       element: <Display />,
       errorElement: <ErrorPage />,
       children: [
-        // TODO: add the routes
+        {
+          path: "/",
+          element: <CurrentForecast />,
+        },
+        {
+          path: "/5days",
+          element: <FiveDaysForecast />,
+        },
       ],
     },
   ]);

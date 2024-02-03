@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TemperatureUnit, useSettings } from './settingsState';
 import { AnimatePresence } from 'framer-motion';
 import Button from '../../button';
 import Clock from '../Clock/clock';
+import { useForecast } from '../../Forecast/forecastState';
 
 const Overlay = styled.div`
   position: fixed;
@@ -52,6 +53,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   //Local Variables
   const [tempUnits, setTempUnits] = useState<TemperatureUnit>(temperatureunits);
   const [tempTimeFormat, setTempTimeFormat] = useState<string>(timeFormat);
+
 
   useEffect(() => {
     if (props.isOpen) {

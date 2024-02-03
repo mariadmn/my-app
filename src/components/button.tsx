@@ -6,8 +6,10 @@ type ButtonProps = {
   isStyled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   label?: string;
+  disabled?: boolean;
 };
 
+//TODO: change styling
 const StyledButton = styled.button<ButtonProps>`
   background: ${({ theme }) => theme.backgorund};
   border: 2px solid ${({ theme }) => theme.blue};
@@ -23,6 +25,15 @@ const StyledButton = styled.button<ButtonProps>`
     color: ${({ theme }) => theme.blue};
     border-color: ${({ theme }) => theme.text};
   }
+
+  ${(props) =>
+    props.disabled === true &&
+    css`
+      background-color: ${({ theme }) => theme.text};
+      color: ${({ theme }) => theme.blue};
+      border-color: ${({ theme }) => theme.text};
+      cursor: not-allowed;
+  `}
 
   ${(props) =>
     props.size === "sm" &&
@@ -52,9 +63,10 @@ const Button: React.FC<ButtonProps> = ({
   isStyled = false,
   onClick,
   label,
+  disabled,
 }) => {
   return (
-    <StyledButton size={size} isStyled={isStyled} onClick={onClick}>
+    <StyledButton size={size} isStyled={isStyled} onClick={onClick} disabled={disabled}>
       {label}
     </StyledButton>
   );

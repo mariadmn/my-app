@@ -1,6 +1,7 @@
 import React from "react";
 import FiveDaysForecast from "./5dayforecast";
 import CurrentForecast from "./currentForecast";
+import PeriodSelector from "./periodSelector";
 
 interface ForecastProps {
     isCurrent: boolean | undefined;
@@ -11,6 +12,7 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         return (
             <div>
                 <CurrentForecast />
+                <PeriodSelector />
             </div>
         );
     }
@@ -19,6 +21,7 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         return (
             <div>
                 <FiveDaysForecast />
+                <PeriodSelector />
             </div>
         );
     }
