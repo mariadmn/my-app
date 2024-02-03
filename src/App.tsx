@@ -4,8 +4,10 @@ import { ThemeProvider, useTheme } from 'styled-components';
 import Display from './components/display';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
+import axios from 'axios';
 
 function App() {
+
   const router = createBrowserRouter([
     {
       path: '/',

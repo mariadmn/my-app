@@ -56,6 +56,9 @@ const TopBar = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const saveModal = () => {
+    setIsModalOpen(false);
+  }
 
   //Handle the theme
   const { toggleTheme } = useTheme();
@@ -68,9 +71,7 @@ const TopBar = () => {
       <Clock />
       <SearchBox onSearch={(query) => console.log(query)} />
       <Button onClick={openModal}>Settings</Button>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {null}
-      </Modal>
+      <Modal isOpen={isModalOpen} onClose={closeModal} onSave={saveModal} />
 
       {/* <button
           style={{

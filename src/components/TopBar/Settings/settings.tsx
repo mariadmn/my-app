@@ -1,6 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useSettings } from './settingsState';
+import { TemperatureUnit, useSettings } from './settingsState';
+import { AnimatePresence } from 'framer-motion';
+import Button from '../../button';
+import Row from '../../row';
 
 const Overlay = styled.div`
   position: fixed;
@@ -32,76 +35,100 @@ const CloseButton = styled.button`
   color: #333;
 `;
 
-const Modal = ({ isOpen, onClose, children }: { isOpen: boolean, onClose: () => void, children: React.ReactNode }) => {
+const RowContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+// ... (your existing imports)
+
+type ModalProps = {
+  isOpen: boolean;
+  onSave: () => void;
+  onClose: () => void;
+};
+
+const Modal: React.FC<ModalProps> = (props) => {
   const { timeFormat, temperatureunits, setTimeFormat, setUnits } = useSettings();
+  const { isOpen, onClose } = props;
+  const [localUnits, setLocalUnits] = useState<TemperatureUnit>(temperatureunits);
+  const [localTimeFormat, setLocalTimeFormat] = useState<string>(timeFormat);
 
   //Hnadle the closing when the user clicks outside the modal
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+    if (props.isOpen) {
+      setLocalUnits(temperatureunits);
+      setLocalTimeFormat(timeFormat);
     }
+  }, [isOpen, temperatureunits, timeFormat]);
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
-  if (!isOpen) return null;
+  if (!props.isOpen) return null;
+
+  // Use local variables to track changes before saving
+  let tempLocalUnits = localUnits;
+  let tempLocalTimeFormat = localTimeFormat;
+
+  const saveSettings = () => {
+    // Save only when the "Save" button is clicked
+    setUnits(tempLocalUnits as TemperatureUnit);
+    setTimeFormat(tempLocalTimeFormat as "AM/PM" | "24h");
+    onClose();
+  };
+
+  const handleClose = () => {
+    setLocalUnits(temperatureunits);
+    setLocalTimeFormat(timeFormat);
+    onClose();
+  };
 
   return (
     <Overlay>
       <ModalContainer ref={modalRef}>
-        <CloseButton onClick={onClose}>X</CloseButton>
-        <div>
-      <div>
-        <label>
-          Time Format:
-          <button
-            onClick={() => setTimeFormat("24h")}
-            style={{ marginRight: '8px', background: timeFormat === '24h' ? 'lightblue' : 'white' }}
-          >
-            24h
-          </button>
-          <button
-            onClick={() => setTimeFormat("AM/PM")}
-            style={{ background: timeFormat === 'AM/PM' ? 'lightblue' : 'white' }}
-          >
-            AM/PM
-          </button>
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Temperature Units:
-          <button
-            onClick={() => setUnits('metric')}
-            style={{ marginRight: '8px', background: temperatureunits === 'metric' ? 'lightblue' : 'white' }}
-          >
-            Metric
-          </button>
-          <button
-            onClick={() => setUnits('imperial')}
-            style={{ marginRight: '8px', background: temperatureunits === 'imperial' ? 'lightblue' : 'white' }}
-          >
-            Imperial
-          </button>
-          <button
-            onClick={() => setUnits('standard')}
-            style={{ background: temperatureunits === 'standard' ? 'lightblue' : 'white' }}
-          >
-            Standard
-          </button>
-        </label>
-      </div>
-    </div>
-        {children}
+        <RowContainer>
+          <label>
+            Time Format:
+            <Button
+              label={"24H"}
+              onClick={() => (tempLocalTimeFormat = "24h")}
+              size="sm"
+              isStyled={localTimeFormat === "24h"}
+            />
+            <Button
+              label={"AM/PM"}
+              onClick={() => (tempLocalTimeFormat = "AM/PM")}
+              size="sm"
+              isStyled={localTimeFormat === "AM/PM"}
+            />
+          </label>
+        </RowContainer>
+        <RowContainer>
+          <label>
+            Temperature Units:
+            <Button
+              label={"Metric"}
+              onClick={() => (tempLocalUnits = 'metric')}
+              size="sm"
+              isStyled={temperatureunits === 'metric'}
+            />
+            <Button
+              label={"Imperial"}
+              onClick={() => (tempLocalUnits = 'imperial')}
+              size="sm"
+              isStyled={temperatureunits === 'imperial'}
+            />
+            <Button
+              label={"Standard"}
+              onClick={() => (tempLocalUnits = 'standard')}
+              size="sm"
+              isStyled={temperatureunits === 'standard'}
+            />
+          </label>
+        </RowContainer>
+        <RowContainer>
+          <Button label={"Cancel"} onClick={handleClose} size="sm" />
+          <Button label={"Save"} onClick={saveSettings} />
+        </RowContainer>
       </ModalContainer>
     </Overlay>
   );
