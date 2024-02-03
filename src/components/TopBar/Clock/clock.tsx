@@ -20,7 +20,7 @@ const Clock: React.FC = () => {
 
     const intervalId = setInterval(updateTime, 1000);
 
-    // Cleanup interval on component unmount
+    // Cleanup interval
     return () => clearInterval(intervalId);
   }, [timeFormat]);
 

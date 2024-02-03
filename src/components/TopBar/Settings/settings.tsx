@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { TemperatureUnit, useSettings } from './settingsState';
 import { AnimatePresence } from 'framer-motion';
 import Button from '../../button';
-import Row from '../../row';
+import Clock from '../Clock/clock';
 
 const Overlay = styled.div`
   position: fixed;
@@ -24,23 +24,22 @@ const ModalContainer = styled.div`
   border-radius: 8px;
 `;
 
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #333;
-`;
-
 const RowContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-self: center;
+  margin-top: 10px;
+  flex-direction: row; /* Change this line to make it a row */
+  align-items: center;
+  justify-content: center;
+
+  label {
+    text-align: center; 
+  }
 `;
 
-// ... (your existing imports)
+const StyledModalTitle = styled.h2`
+  text-align: center;
+`;
 
 type ModalProps = {
   isOpen: boolean;
@@ -53,9 +52,8 @@ const Modal: React.FC<ModalProps> = (props) => {
   const { isOpen, onClose } = props;
   const [localUnits, setLocalUnits] = useState<TemperatureUnit>(temperatureunits);
   const [localTimeFormat, setLocalTimeFormat] = useState<string>(timeFormat);
-
-  //Hnadle the closing when the user clicks outside the modal
   const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (props.isOpen) {
       setLocalUnits(temperatureunits);
@@ -63,16 +61,9 @@ const Modal: React.FC<ModalProps> = (props) => {
     }
   }, [isOpen, temperatureunits, timeFormat]);
 
-  if (!props.isOpen) return null;
-
-  // Use local variables to track changes before saving
-  let tempLocalUnits = localUnits;
-  let tempLocalTimeFormat = localTimeFormat;
-
   const saveSettings = () => {
-    // Save only when the "Save" button is clicked
-    setUnits(tempLocalUnits as TemperatureUnit);
-    setTimeFormat(tempLocalTimeFormat as "AM/PM" | "24h");
+    setUnits(localUnits);
+    setTimeFormat(localTimeFormat as '24h' | 'AM/PM');
     onClose();
   };
 
@@ -82,21 +73,24 @@ const Modal: React.FC<ModalProps> = (props) => {
     onClose();
   };
 
+  if (!props.isOpen) return null;
+
   return (
     <Overlay>
       <ModalContainer ref={modalRef}>
+        <StyledModalTitle>Settings</StyledModalTitle>
         <RowContainer>
           <label>
             Time Format:
             <Button
               label={"24H"}
-              onClick={() => (tempLocalTimeFormat = "24h")}
+              onClick={() => (setLocalTimeFormat("24h"))}
               size="sm"
               isStyled={localTimeFormat === "24h"}
             />
             <Button
               label={"AM/PM"}
-              onClick={() => (tempLocalTimeFormat = "AM/PM")}
+              onClick={() => (setLocalTimeFormat("AM/PM"))}
               size="sm"
               isStyled={localTimeFormat === "AM/PM"}
             />
@@ -107,19 +101,19 @@ const Modal: React.FC<ModalProps> = (props) => {
             Temperature Units:
             <Button
               label={"Metric"}
-              onClick={() => (tempLocalUnits = 'metric')}
+              onClick={() => (setLocalUnits('metric'))}
               size="sm"
               isStyled={temperatureunits === 'metric'}
             />
             <Button
               label={"Imperial"}
-              onClick={() => (tempLocalUnits = 'imperial')}
+              onClick={() => (setLocalUnits('imperial'))}
               size="sm"
               isStyled={temperatureunits === 'imperial'}
             />
             <Button
               label={"Standard"}
-              onClick={() => (tempLocalUnits = 'standard')}
+              onClick={() => (setLocalUnits('standard'))}
               size="sm"
               isStyled={temperatureunits === 'standard'}
             />
@@ -127,8 +121,17 @@ const Modal: React.FC<ModalProps> = (props) => {
         </RowContainer>
         <RowContainer>
           <Button label={"Cancel"} onClick={handleClose} size="sm" />
-          <Button label={"Save"} onClick={saveSettings} />
+          <Button label={"Save"} onClick={saveSettings} size="sm" />
         </RowContainer>
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: "10px",
+            marginTop: "1rem",
+          }}
+        >
+          <Clock />
+        </div>
       </ModalContainer>
     </Overlay>
   );
