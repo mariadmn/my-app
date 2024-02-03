@@ -1,10 +1,11 @@
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ThemeProvider, useTheme } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import Display from './components/display';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import axios from 'axios';
+import  useTheme from './theme';
 
 function App() {
 
@@ -28,14 +29,14 @@ function App() {
     },
   });
 
-  // const theme = useTheme();
+  const theme = useTheme();
 
   return (
-    // <ThemeProvider theme={theme}>
-    //   <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-    //   </QueryClientProvider>
-    // </ThemeProvider>
+       </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
