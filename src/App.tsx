@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ThemeProvider, useTheme } from 'styled-components';
+import Display from './components/display';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import ErrorPage from './ErrorPage';
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Display />,
+      errorElement: <ErrorPage />,
+      children: [
+        // TODO: add the routes
+      ],
+    },
+  ]);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  });
+
+  // const theme = useTheme();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <ThemeProvider theme={theme}>
+    //   <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+    //   </QueryClientProvider>
+    // </ThemeProvider>
   );
 }
 
