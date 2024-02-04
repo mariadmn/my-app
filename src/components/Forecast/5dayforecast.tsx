@@ -1,11 +1,34 @@
+import styled from 'styled-components';
 import { useSettings } from "../TopBar/Settings/settingsState";
 import WeatherIcon from "./weatherIcon";
 import { useForecast } from "./forecastState";
 
+const CenteredContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const DayContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: 'row';
+  justify-content: 'space-between';
+  align-content: 'center';
+`;
+
 const FiveDaysForecast: React.FC = () => {
     const { tempSuffix } = useSettings();
     const { data, isLoading } = useForecast();
-    //TODO: Put icon in the right place
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -16,27 +39,24 @@ const FiveDaysForecast: React.FC = () => {
         return <h1>Loading...</h1>;
     }
 
-    return (
-        <div>
-            {isLoading && <p>Loading...</p>}
-            {data && (
-                <div style={{ display: 'flex', flexDirection: 'column', alignContent: "center"}}>
-                    <h1>{data[0].cityName || 'Loading...'}</h1>
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignContent: "center"}}>
-                        {data.map((day: any) => (
-                            <div key={day.date}>
-                                <h2>{day.dayOfWeek}</h2>
-                                <WeatherIcon condition={day.forecastDetails[0].weather.main} />
-                                <h4>
-                                    H:{day.highestTemp}{tempSuffix === 'K'? "":"°"}{tempSuffix} 
-                                    / L:{day.lowestTemp}{tempSuffix === 'K'? "":"°"}{tempSuffix}
-                                </h4>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )} 
-        </div>
-    );
-}
+  return (
+    <CenteredContainer>
+      <h1>{data[0].cityName || 'Loading...'}</h1>
+      <InfoContainer>
+        {data.map((day: any) => (
+          <DayContainer key={day.date}>
+            <h2>{day.dayOfWeek}</h2>
+            <WeatherIcon condition={day.forecastDetails[0].weather.main} />
+            <h3>{day.forecastDetails[0].weather.main}</h3>
+            <h4>
+              H:{day.highestTemp}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}
+              / L:{day.lowestTemp}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}
+            </h4>
+          </DayContainer>
+        ))}
+      </InfoContainer>
+    </CenteredContainer>
+  );
+};
+
 export default FiveDaysForecast;

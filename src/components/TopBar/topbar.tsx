@@ -4,16 +4,17 @@ import Search from "./Search/search";
 import styled from "styled-components";
 import Modal from "./Settings/settings";
 import useTheme, { lightTheme } from "../../theme";
-// import ThemeSwitch from "../../assets/weather-icons/theme-switch.svg";
-// import { useSettings } from "./Settings/settingsState";
-// import SettingsModal from "./Settings/settings";
+import { ReactComponent as ThemeSwitch } from "../../assets/weather-icons/theme-switch.svg";
 
 const StyledTopBar = styled.div`
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const RightSection = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -21,6 +22,9 @@ const Button = styled.button`
   cursor: pointer;
   background: transparent;
   font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
   color: ${({ theme }) => theme.text};
 
   &:hover {
@@ -28,24 +32,20 @@ const Button = styled.button`
   }
 `;
 
-// const StyledIconButton = styled(Button)`
-//   padding: 0;
-//   margin: 0;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
+const StyledThemeSwitch = styled(ThemeSwitch)`
+  width: 15px; 
+  height: 15px; 
+`;
 
-// const StyledThemeSwitchIcon = styled(ThemeSwitch)`
-//   height: 1rem;
-//   width: 1rem;
-//   border-radius: 50%;
-//   background: #fff;
-//   border: solid 1px white;
-// `;
+const ThemeSwitchButton = styled(Button)`
+  margin-right: 10x; 
+`;
 
-const TopBar = () => {
-  //Handle the modal
+const TopBar: React.FC = () => {
+  // Handle the search bar visibility
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+  // Handle the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -54,28 +54,23 @@ const TopBar = () => {
     setIsModalOpen(false);
   };
 
-  //Handle the theme
+  // Handle the theme
   const { toggleTheme, theme } = useTheme();
 
   return (
     <StyledTopBar>
       <Clock />
-      <div style={{justifyContent:"space-between", flexDirection:"row"}}>
-        <Search />
-        <Button onClick={openModal}>Settings</Button>
+      <RightSection>
+        <Search
+          isSearchVisible={isSearchVisible}
+          onSearchToggle={() => setIsSearchVisible(!isSearchVisible)}
+        />
+         <Button onClick={openModal}>Settings</Button>
+        <ThemeSwitchButton type="button" onClick={toggleTheme}>
+          <StyledThemeSwitch />
+        </ThemeSwitchButton>
         <Modal isOpen={isModalOpen} onClose={closeModal} />
-      </div>
-      {/* TODO: make this button work */}
-      {/* <button
-        style={{
-          display: "flex",
-          alignItems: "center",
-        }}
-        onClick={toggleTheme}
-      >
-        {theme.background === lightTheme.background ? "Light Theme" : "Dark Theme"}
-      </button>  */}
-
+      </RightSection>
     </StyledTopBar>
   );
 }

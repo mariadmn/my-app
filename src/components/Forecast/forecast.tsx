@@ -2,34 +2,40 @@ import React from "react";
 import FiveDaysForecast from "./5dayforecast";
 import CurrentForecast from "./currentForecast";
 import PeriodSelector from "./periodSelector";
+import styled from "styled-components";
 
 interface ForecastProps {
     isCurrent: boolean | undefined;
     is5Days?: boolean | undefined;
 }
+
+const CenteredContent = styled.div`
+  text-align: center;
+`;
+
 const Forecast: React.FC<ForecastProps> = (props) => {
     if(props.isCurrent === true){
         return (
-            <div>
+            <CenteredContent>
                 <CurrentForecast />
                 <PeriodSelector />
-            </div>
+            </CenteredContent>
         );
     }
 
     if(props.is5Days === true){
         return (
-            <div>
+            <CenteredContent>
                 <FiveDaysForecast />
                 <PeriodSelector />
-            </div>
+            </CenteredContent>
         );
     }
 
     return (
-        <div>
+        <CenteredContent>
             <h1>Pick a city to see the full forecast</h1>
-        </div>
+        </CenteredContent>
     );
 }
 

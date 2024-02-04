@@ -10,65 +10,67 @@ import {ReactComponent as Snow} from '../../assets/weather-icons/weather-snowy.s
 import styled from 'styled-components';
 
 
-export const WeatherIconContainer = styled.div`
+export const IconContainer = styled.div`
   & > svg {
     width: 7rem;
     height: 7rem;
   }
 `;
 
-const WeatherIcon: React.FC<{ condition: string; isDayTime?: boolean }> = ({
-  condition,
-  isDayTime = true,
-}) => {
+const WeatherIcon: React.FC<{ condition: string; isDayTime?: boolean }> = ({ condition, isDayTime = true }) => {
   if (condition === 'Clear')
     return (
-      <WeatherIconContainer  >
+      <IconContainer  >
         {isDayTime ? <Sun /> : <Moon />}
-      </WeatherIconContainer>
+      </IconContainer>
     );
+
   if (condition === 'Clouds')
     return (
-      <WeatherIconContainer>
+      <IconContainer>
         <Clouds />
-      </WeatherIconContainer>
+      </IconContainer>
     );
+
   if (condition === 'Rain')
     return (
-      <WeatherIconContainer>
+      <IconContainer>
         <Pouring />
-      </WeatherIconContainer>
+      </IconContainer>
     );
+
   if (condition === 'Thunderstorm')
     return (
-      <WeatherIconContainer>
+      <IconContainer>
         <Thunderstorm />
-      </WeatherIconContainer>
+      </IconContainer>
     );
+
   if (condition === 'Snow')
     return (
-      <WeatherIconContainer>
+      <IconContainer>
         <Snow />
-      </WeatherIconContainer>
+      </IconContainer>
     );
+
   if (condition === 'Mist' || condition === 'Fog')
     return (
-      <WeatherIconContainer>
+      <IconContainer>
         <Fog />
-      </WeatherIconContainer>
+      </IconContainer>
     );
 
   if (condition === 'Haze')
     return (
-      <WeatherIconContainer>
+      <IconContainer>
         <Haze />
-      </WeatherIconContainer>
+      </IconContainer>
     );
 
   return (
-    <WeatherIconContainer>
+    <IconContainer>
       <Unknown />
-    </WeatherIconContainer>
+    </IconContainer>
   );
 };
 
