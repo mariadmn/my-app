@@ -1,4 +1,5 @@
 import { useSettings } from "../TopBar/Settings/settingsState";
+import WeatherIcon from "./weatherIcon";
 import { useForecast } from "./forecastState";
 
 const FiveDaysForecast: React.FC = () => {
@@ -25,10 +26,7 @@ const FiveDaysForecast: React.FC = () => {
                         {data.map((day: any) => (
                             <div key={day.date}>
                                 <h2>{day.dayOfWeek}</h2>
-                                {/* TODO: Put icon here */}
-                                <p>
-                                    {day.forecastDetails[0].weather.description}
-                                </p>
+                                <WeatherIcon condition={day.forecastDetails[0].weather.main} />
                                 <h4>
                                     H:{day.highestTemp}{tempSuffix === 'K'? "":"°"}{tempSuffix} 
                                     / L:{day.lowestTemp}{tempSuffix === 'K'? "":"°"}{tempSuffix}

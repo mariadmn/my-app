@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
-import CloseCircle from '../../../assets/weather-icons/close-circle.svg';
+import { ReactComponent as CloseCircle } from '../../../assets/weather-icons/close-circle.svg';
+
 import { useCityState } from '../../cityState';
 
 const StyledCloseCircle = styled(CloseCircle)`
@@ -85,8 +86,7 @@ const Search: React.FC = () => {
             onKeyDown={handleKeyPress}
           />
           <Button type="button" onClick={handleClear}>
-            {/* <StyledCloseCircle /> */}
-            x
+            <StyledCloseCircle />
           </Button>
         </form>
       </div>

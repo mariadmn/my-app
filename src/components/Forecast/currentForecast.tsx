@@ -1,4 +1,5 @@
 import { useSettings } from "../TopBar/Settings/settingsState";
+import WeatherIcon from "./weatherIcon";
 import { useForecast } from "./forecastState";
 
 const CurrentForecast: React.FC = () => {
@@ -16,7 +17,7 @@ const CurrentForecast: React.FC = () => {
             {data && (
                 <div>
                     <h1>{data.name}</h1>
-                    <h2>{data.weather[0].description}</h2>
+                    <WeatherIcon condition={data.weather[0].main} />
                     <h3>{data.main.temp}{tempSuffix === 'K'? "":"°"}{tempSuffix}</h3>
                     <p>Feels like {data.main.feels_like}{tempSuffix === 'K'? "":"°"}{tempSuffix}</p>
                     <p>Humidity: {data.main.humidity}%</p>
