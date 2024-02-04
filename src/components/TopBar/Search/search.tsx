@@ -1,20 +1,23 @@
 import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseCircle } from '../../../assets/weather-icons/close-circle.svg';
-
 import { useCityState } from '../../cityState';
 
 const StyledCloseCircle = styled(CloseCircle)`
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+  width: 11px; 
+  height: 11px; 
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 `;
 
-const Input= styled.input`
+
+const Input = styled.input`
   background: transparent;
   border: none;
+  padding-right: 24px; 
   flex: 1;
 
   &::placeholder {
@@ -23,17 +26,29 @@ const Input= styled.input`
   }
 `;
 
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  border: none;
-  background: none;
+const SearchContainer = styled.div`
+  position: relative;
 `;
 
-const Search: React.FC = () => {
-  const { visibleCities, setSelectedCity, setVisibleCities, selectedCity } = useCityState();
-  const [originalCities] = useState(visibleCities);
-  const [searchInput, setSearchInput] = useState('');
+const Button = styled.button`
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.text};
+
+  &:hover {
+    color: ${({ theme }) => theme.blue};
+  }
+`;
+
+const Search: React.FC<{isSearchVisible: boolean, onSearchToggle: () => void }> = ({ isSearchVisible, onSearchToggle }) => {
+  const { visibleCities, setSelectedCity, setVisibleCities } = useCityState();
+  const [ originalCities ] = useState(visibleCities);
+  const [ searchInput, setSearchInput ] = useState('');
 
   const handleSearch = (input: string) => {
     if (input === '') {
@@ -46,12 +61,6 @@ const Search: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleCitySelection();
-    }
-  };
-
   const handleCitySelection = () => {
     const foundCity = visibleCities.find(
       (city) => city.name.toLowerCase() === searchInput.toLowerCase()
@@ -61,9 +70,16 @@ const Search: React.FC = () => {
     }
   };
 
+  const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleCitySelection();
+    }
+  };
+
   const handleClear = () => {
     setSearchInput('');
     setVisibleCities(originalCities);
+    onSearchToggle();
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -72,25 +88,31 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div>
-      <div style={{ position: 'relative' }}>
-        <form onSubmit={handleSubmit} style={{flexDirection: "row"}}>
-          <Input
-            type="text"
-            placeholder="Search"
-            value={searchInput}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setSearchInput(e.target.value);
-              handleSearch(e.target.value);
-            }}
-            onKeyDown={handleKeyPress}
-          />
-          <Button type="button" onClick={handleClear}>
-            <StyledCloseCircle />
-          </Button>
-        </form>
-      </div>
-    </div>
+    <SearchContainer>
+      <form onSubmit={handleSubmit} style={{ flexDirection: 'row' }}>
+        {isSearchVisible ? (
+              <>
+                <Input
+                  type="text"
+                  placeholder="Search"
+                  value={searchInput}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setSearchInput(e.target.value);
+                    handleSearch(e.target.value);
+                  }}
+                  onKeyDown={handleEnterPress}
+                />
+                <Button type="button" onClick={handleClear}>
+                  <StyledCloseCircle />
+                </Button>
+              </>
+            ) : (
+              <Button type="button" onClick={onSearchToggle}>
+                Search
+              </Button>
+            )}
+      </form>
+    </SearchContainer>
   );
 };
 

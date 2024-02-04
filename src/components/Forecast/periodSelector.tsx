@@ -13,6 +13,24 @@ const StyledContainer = styled.div`
   gap: 1rem;
   margin-bottom: 1rem;
 `;
+
+const StyledButton = styled(Button)`
+  font-size: 14px; /* Adjust the font size as needed */
+  padding: 8px 16px; /* Adjust padding as needed */
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.blue}; 
+  }
+
+  ${({ isSelected, theme }) =>
+    isSelected &&
+    `
+    background-color: ${theme.blue}; 
+    color: ${theme.white};
+  `}
+`;
+
 const PeriodSelector: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,16 +67,18 @@ const PeriodSelector: React.FC = () => {
         Forecast
       </div>
       <StyledContainer>
-        <Button
+        <StyledButton
           label="Now"
           size="sm"
           isStyled={location.pathname === "/"}
+          isSelected={location.pathname === "/"}
           onClick={handleNowClick}
         />
-        <Button
+        <StyledButton
           label="5 days"
           size="sm"
           isStyled={location.pathname === "/5days"}
+          isSelected={location.pathname === "/5days"}
           onClick={handle5DaysClick}
         />
       </StyledContainer>

@@ -134,11 +134,7 @@ const Modal: React.FC<ModalProps> = (props) => {
             marginTop: "1rem",
           }}
         >
-          {isClockLoaded ? (
             <Clock />
-          ) : (
-            <p>Loading Clock...</p>
-          )}
         </div>
       </ModalContainer>
     </Overlay>

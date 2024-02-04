@@ -4,6 +4,7 @@ import { useSettings } from '../Settings/settingsState';
 const Clock: React.FC = () => {
   const { timeFormat } = useSettings();
   const [currentTime, setCurrentTime] = useState<string>('');
+  const [loading, setLoading] = useState(true); // New loading state
 
   useEffect(() => {
     const updateTime = () => {
@@ -16,6 +17,7 @@ const Clock: React.FC = () => {
           : `${(hours % 12) || 12}:${minutes.toString().padStart(2, '0')} ${hours >= 12 ? 'PM' : 'AM'}`;
 
       setCurrentTime(formattedTime);
+      setLoading(false); // Mark the clock as loaded
     };
 
     const intervalId = setInterval(updateTime, 1000);
@@ -25,8 +27,12 @@ const Clock: React.FC = () => {
   }, [timeFormat]);
 
   return (
-    <div>
-      <h1>{currentTime}</h1>
+    <div style={{ fontSize: 12 }}>
+      {loading ? (
+        <p>Loading Clock...</p>
+      ) : (
+        <h1>{currentTime}</h1>
+      )}
     </div>
   );
 };

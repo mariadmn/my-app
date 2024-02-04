@@ -7,6 +7,7 @@ type ButtonProps = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   label?: string;
   disabled?: boolean;
+  isSelected?: boolean;
 };
 
 //TODO: change styling
@@ -64,9 +65,10 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   label,
   disabled,
+  isSelected
 }) => {
   return (
-    <StyledButton size={size} isStyled={isStyled} onClick={onClick} disabled={disabled}>
+    <StyledButton size={size} isStyled={isStyled} onClick={onClick} disabled={disabled} isSelected={isSelected}>
       {label}
     </StyledButton>
   );
