@@ -1,16 +1,15 @@
 import CityGrid from "./CityGrid/cityGrid";
 import Forecast from "./Forecast/forecast";
+import { useForecastState } from "./Forecast/forecastState";
 import PeriodSelector from "./Forecast/periodSelector";
 import TopBar from "./TopBar/topbar";
-import { useCityState } from "./cityState";
 
 const Display = () => {
-    const { selectedCity } = useCityState();
-    const isCurrent = selectedCity ? true : undefined;
+    const { isCurrent, is5Days } = useForecastState();
     return (
         <div>
             <TopBar />
-            <Forecast isCurrent={isCurrent}/>
+            <Forecast isCurrent={isCurrent} is5Days={is5Days}/>
             <CityGrid />
         </div>
     );

@@ -60,11 +60,13 @@ const TopBar = () => {
   return (
     <StyledTopBar>
       <Clock />
-      <Search />
-      <Button onClick={openModal}>Settings</Button>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <div style={{justifyContent:"space-between", flexDirection:"row"}}>
+        <Search />
+        <Button onClick={openModal}>Settings</Button>
+        <Modal isOpen={isModalOpen} onClose={closeModal} />
+      </div>
       {/* TODO: make this button work */}
-      <button
+      {/* <button
         style={{
           display: "flex",
           alignItems: "center",
@@ -72,7 +74,7 @@ const TopBar = () => {
         onClick={toggleTheme}
       >
         {theme.background === lightTheme.background ? "Light Theme" : "Dark Theme"}
-      </button> 
+      </button>  */}
 
     </StyledTopBar>
   );

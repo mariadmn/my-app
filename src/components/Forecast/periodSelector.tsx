@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../button";
 import { useCityState } from "../cityState";
+import { useForecastState } from "./forecastState";
 
 
 const StyledContainer = styled.div`
@@ -16,6 +17,19 @@ const PeriodSelector: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { selectedCity } = useCityState();
+  const { setIsCurrent, setIs5Days } = useForecastState();
+
+  const handleNowClick = () => {
+    setIs5Days(false);
+    setIsCurrent(true);
+    navigate("/");
+  };
+
+  const handle5DaysClick = () => {
+    setIs5Days(true);
+    setIsCurrent(false);
+    navigate("/5days");
+  };
 
   if (!selectedCity) return null;
   return (
@@ -39,13 +53,13 @@ const PeriodSelector: React.FC = () => {
           label="Now"
           size="sm"
           isStyled={location.pathname === "/"}
-          onClick={() => navigate("/")}
+          onClick={handleNowClick}
         />
         <Button
           label="5 days"
           size="sm"
           isStyled={location.pathname === "/5days"}
-          onClick={() => {navigate("/5days"); console.log(location.pathname)}}
+          onClick={handle5DaysClick}
         />
       </StyledContainer>
     </div>

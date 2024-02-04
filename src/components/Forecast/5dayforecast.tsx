@@ -1,33 +1,43 @@
 import { useSettings } from "../TopBar/Settings/settingsState";
-import { useCityState } from "../cityState";
 import { useForecast } from "./forecastState";
 
 const FiveDaysForecast: React.FC = () => {
     const { tempSuffix } = useSettings();
-    const { selectedCity } = useCityState();
-    const { data, isLoading } = useForecast(false);
+    const { data, isLoading } = useForecast();
     //TODO: Put icon in the right place
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (!data || !Array.isArray(data)) {
+        //data is an array of objects
+        return <h1>Loading...</h1>;
+    }
+
     return (
         <div>
             {isLoading && <p>Loading...</p>}
             {data && (
-                <div>
-                    <h1>{data.name}</h1>
-                    {data.map((day: any) => (
-                        <div key={day.date}>
-                            <h2>{day.dayOfWeek}</h2>
-                            <h3>
-                                {day.highestTemp}
-                                {tempSuffix} / {day.lowestTemp}
-                                {tempSuffix}
-                            </h3>
-                            <p>
-                                {day.forecastDetails[0].weather.description}
-                            </p>
-                        </div>
-                    ))}
+                <div style={{ display: 'flex', flexDirection: 'column', alignContent: "center"}}>
+                    <h1>{data[0].cityName || 'Loading...'}</h1>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignContent: "center"}}>
+                        {data.map((day: any) => (
+                            <div key={day.date}>
+                                <h2>{day.dayOfWeek}</h2>
+                                {/* TODO: Put icon here */}
+                                <p>
+                                    {day.forecastDetails[0].weather.description}
+                                </p>
+                                <h4>
+                                    H:{day.highestTemp}{tempSuffix === 'K'? "":"°"}{tempSuffix} 
+                                    / L:{day.lowestTemp}{tempSuffix === 'K'? "":"°"}{tempSuffix}
+                                </h4>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            )}
+            )} 
         </div>
     );
 }

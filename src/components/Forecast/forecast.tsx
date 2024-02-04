@@ -8,7 +8,7 @@ interface ForecastProps {
     is5Days?: boolean | undefined;
 }
 const Forecast: React.FC<ForecastProps> = (props) => {
-    if(props.isCurrent == true){
+    if(props.isCurrent === true){
         return (
             <div>
                 <CurrentForecast />
@@ -17,7 +17,7 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         );
     }
 
-    if(props.is5Days == true){
+    if(props.is5Days === true){
         return (
             <div>
                 <FiveDaysForecast />

@@ -22,58 +22,58 @@ const Input= styled.input`
   }
 `;
 
-//TODO: change to my theme
-//TODO: handle the problem with the icon
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+`;
+
 const Search: React.FC = () => {
-    const { visibleCities, setSelectedCity, setVisibleCities, setDisabledCities } = useCityState();
-    //Make a copy of the original cities
-    const [originalCities] = useState(visibleCities);
-    const [searchInput, setSearchInput] = useState("");
+  const { visibleCities, setSelectedCity, setVisibleCities, selectedCity } = useCityState();
+  const [originalCities] = useState(visibleCities);
+  const [searchInput, setSearchInput] = useState('');
 
-    const handleSearch = (input: string) => {
-      if(input === ""){
-        setVisibleCities(originalCities);
-        setDisabledCities([]);
-      }else{
-        const filteredCities = originalCities.filter((city) =>
-          !city.name.toLowerCase().includes(input.toLowerCase())
-        );
-        setDisabledCities(filteredCities);
-      }
-    };
-
-    //handle enter key
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-          const filterCity = originalCities.filter((city) =>
-            city.name.toLowerCase() === searchInput.toLowerCase()
-          );
-            if(filterCity.length > 0){
-              setSelectedCity(filterCity[0]);
-            }
-        }
-    };
-
-    const handleClear = () => {
-        setSearchInput("");
-        setVisibleCities(originalCities);
-        setDisabledCities([]);
-    };
-
-    const handleSubmit= (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const foundCity = originalCities.find(
-        (city) => city.name.toLowerCase() === searchInput.toLowerCase()
+  const handleSearch = (input: string) => {
+    if (input === '') {
+      setVisibleCities(originalCities);
+    } else {
+      const filteredCities = originalCities.filter((city) =>
+        city.name.toLowerCase().includes(input.toLowerCase())
       );
-      if (foundCity) {
-        setSelectedCity(foundCity);
-      }
-    };
+      setVisibleCities(filteredCities);
+    }
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleCitySelection();
+    }
+  };
+
+  const handleCitySelection = () => {
+    const foundCity = visibleCities.find(
+      (city) => city.name.toLowerCase() === searchInput.toLowerCase()
+    );
+    if (foundCity) {
+      setSelectedCity(foundCity);
+    }
+  };
+
+  const handleClear = () => {
+    setSearchInput('');
+    setVisibleCities(originalCities);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleCitySelection();
+  };
 
   return (
     <div>
       <div style={{ position: 'relative' }}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{flexDirection: "row"}}>
           <Input
             type="text"
             placeholder="Search"
@@ -84,18 +84,10 @@ const Search: React.FC = () => {
             }}
             onKeyDown={handleKeyPress}
           />
-           <button
-            type="button"
-            onClick={handleClear}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              border: "none",
-              background: "none",
-            }}
-          >
+          <Button type="button" onClick={handleClear}>
+            {/* <StyledCloseCircle /> */}
             x
-          </button>
+          </Button>
         </form>
       </div>
     </div>
@@ -103,5 +95,3 @@ const Search: React.FC = () => {
 };
 
 export default Search;
-
-

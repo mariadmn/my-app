@@ -2,12 +2,28 @@ import { useQuery } from "react-query";
 import { useSettings } from "../TopBar/Settings/settingsState";
 import { useCityState } from "../cityState";
 import { useEffect } from "react";
+import { create } from "zustand";
 
 const apiKey = '8d3b84bd38e936c4c5fbc9e1c6094240';
 
-export function useForecast(isCurrent: boolean) {
+type ForecastState = {
+  isCurrent: boolean;
+  is5Days?: boolean;
+  setIsCurrent: (isCurrent: boolean) => void;
+  setIs5Days: (is5Days: boolean) => void;
+};
+
+export const useForecastState = create<ForecastState>((set) => ({
+  isCurrent: false,
+  is5Days: false,
+  setIsCurrent: (isCurrent) => set({ isCurrent }),
+  setIs5Days: (is5Days) => set({ is5Days }),
+}));
+
+export function useForecast() {
   const { temperatureunits } = useSettings();
   const { selectedCity } = useCityState();
+  const { isCurrent, is5Days } = useForecastState();
 
   //Organizing the forecast data for 5 days forecast
   const organizeForecastData = (forecastData: any) => {
@@ -26,6 +42,8 @@ export function useForecast(isCurrent: boolean) {
   
     // Organize each day's data
     const organizedData = Object.keys(groupedData).map((date) => {
+      const cityName = forecastData.city.name;
+
       const dayData = groupedData[date];
   
       // Find highest and lowest temperatures
@@ -44,6 +62,7 @@ export function useForecast(isCurrent: boolean) {
       const dayOfWeek = new Date(dayData[0].dt * 1000).toLocaleDateString('en-US', { weekday: 'long' });
   
       return {
+        cityName,
         date,
         dayOfWeek,
         highestTemp,
@@ -51,7 +70,6 @@ export function useForecast(isCurrent: boolean) {
         forecastDetails,
       };
     });
-    console.log(organizedData);
     return organizedData;
   };
 

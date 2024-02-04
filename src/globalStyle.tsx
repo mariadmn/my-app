@@ -1,11 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   body, input, button {
     margin: 0;
     padding: 0;
     font-family: 'Helvetica Neue', Helvetica,  sans-serif;
-    background-color: ${(props) => props.theme.background};
+    background-color: "#000";
     color: ${(props) => props.theme.text};
   }
 `;

@@ -3,9 +3,7 @@ import { create } from "zustand";
 
 type CitiesState = {
   selectedCity: Cities | undefined;
-  visibleCities: Cities[];//The cities that are visible
-  disabledCities: Array<Cities>; //The cities that are not compatible with the search
-  setDisabledCities: (cities: Array<Cities>) => void;
+  visibleCities: Cities[];//The cities that are visible in the grid
   setSelectedCity: (city: Cities) => void;
   setVisibleCities: (cities: Array<Cities>) => void;
 };
@@ -26,9 +24,7 @@ const shuffleArray = (array: Cities[]) => {
 
 export const useCityState = create<CitiesState>((set) => ({
   selectedCity: undefined, 
-  visibleCities: shuffleArray(CitiesArray).slice(0, 18), // 18 cities
-  disabledCities: [],
-  setDisabledCities: (cities) => set({ disabledCities: cities }),
+  visibleCities: shuffleArray(CitiesArray).slice(0, 18), // 18 cities are visible in the grid
   setSelectedCity: (city) => set({ selectedCity: city }),
   setVisibleCities: (cities) => set({ visibleCities: cities }),
 }));

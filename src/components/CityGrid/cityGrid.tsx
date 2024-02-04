@@ -5,6 +5,7 @@ import { useCityState } from "../cityState";
 // import { AnimatePresence, motion } from "framer-motion";
 import { Cities } from "../../assets/cities";
 import Button from "../button";
+import { useForecastState } from "../Forecast/forecastState";
 
 const GridContainer = styled.div`
   display: grid;
@@ -15,9 +16,11 @@ const GridContainer = styled.div`
 `;
 
 const CityGrid: React.FC = () => {
-  const { visibleCities, setSelectedCity, selectedCity, disabledCities } = useCityState();
+  const { visibleCities, setSelectedCity, selectedCity } = useCityState();
+  const { setIsCurrent} = useForecastState();
   const handleCityClick = (city: Cities) => {
     setSelectedCity(city);
+    setIsCurrent(true);
   };
 
   return (
@@ -32,7 +35,7 @@ const CityGrid: React.FC = () => {
           //   animate={{ opacity: 1, scale: 1 }}
           //   exit={{ opacity: 0, scale: 0.75, transition: { duration: 0.2 } }}
           // >
-            <Button label={city.name} isStyled={selectedCity?.name === city.name} onClick={() => handleCityClick(city)} disabled={disabledCities.includes(city)} />
+            <Button label={city.name} isStyled={selectedCity?.name === city.name} onClick={() => handleCityClick(city)} />
           // </motion.div>
         ))}
       {/* </AnimatePresence> */}
