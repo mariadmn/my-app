@@ -66,9 +66,9 @@ const TopBar: React.FC = () => {
           onSearchToggle={() => setIsSearchVisible(!isSearchVisible)}
         />
          <Button onClick={openModal}>Settings</Button>
-        <ThemeSwitchButton type="button" onClick={toggleTheme}>
+        {/* <ThemeSwitchButton type="button" onClick={toggleTheme}>
           <StyledThemeSwitch />
-        </ThemeSwitchButton>
+        </ThemeSwitchButton> */}
         <Modal isOpen={isModalOpen} onClose={closeModal} />
       </RightSection>
     </StyledTopBar>

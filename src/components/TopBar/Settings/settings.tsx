@@ -62,10 +62,6 @@ const Modal: React.FC<ModalProps> = (props) => {
   //Local Variables
   const [tempUnits, setTempUnits] = useState<TemperatureUnit>(temperatureunits);
   const [tempTimeFormat, setTempTimeFormat] = useState<string>(timeFormat);
-  const [isClockLoaded, setIsClockLoaded] = useState(false);
-  const handleClockLoad = () => {
-    setIsClockLoaded(true);
-  };
 
   useEffect(() => {
     if (props.isOpen) {

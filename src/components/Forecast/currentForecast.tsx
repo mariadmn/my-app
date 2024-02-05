@@ -9,13 +9,19 @@ const CenteredContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin: 0; 
+  p {
+    margin-bottom: 0; 
+    margin-top: 10px;
+    align-self: "left" !important;
+    text-align: left !important;
+  }
 `;
 
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
 `;
 
 const InfoContainer = styled.div`
@@ -23,6 +29,7 @@ const InfoContainer = styled.div`
   align-items: center;
   gap: 1rem;
 `;
+
 
 const CurrentForecast: React.FC = () => {
     const { tempSuffix } = useSettings();
@@ -49,18 +56,19 @@ const CurrentForecast: React.FC = () => {
         {isLoading && <p>Loading...</p>}
         {data && (
             <ContentContainer>
-            <h1>{data.name}</h1>
+           
             <InfoContainer>
                 <ContentContainer>
+                    <h2>{data.name}</h2>
                     <WeatherIcon condition={data.weather[0].main} />
                     <h3>{data.weather[0].main}</h3>
                 </ContentContainer>
                 <div>
-                <h3>Temp: {data.main.temp}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}</h3>
-                <p>Feels like: {data.main.feels_like}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}</p>
-                <p>Humidity: {data.main.humidity}%</p>
-                <p>Sunrise: {formatTime(data.sys.sunrise)}</p>
-                <p>Sunset: {formatTime(data.sys.sunset)}</p>
+                    <p>Temp: {data.main.temp}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}</p>
+                    <p>Feels like: {data.main.feels_like}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}</p>
+                    <p>Humidity: {data.main.humidity}%</p>
+                    <p>Sunrise: {formatTime(data.sys.sunrise)}</p>
+                    <p>Sunset: {formatTime(data.sys.sunset)}</p>
                 </div>
             </InfoContainer>
             </ContentContainer>

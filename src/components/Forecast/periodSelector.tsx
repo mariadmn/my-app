@@ -50,6 +50,7 @@ const PeriodSelector: React.FC = () => {
   };
 
   if (!selectedCity) return null;
+  
   return (
     <div
       style={{

@@ -13,12 +13,19 @@ const CenteredContent = styled.div`
   text-align: center;
 `;
 
+const AbsolutePeriodSelector = styled(PeriodSelector)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+`;
+
 const Forecast: React.FC<ForecastProps> = (props) => {
     if(props.isCurrent === true){
         return (
             <CenteredContent>
                 <CurrentForecast />
-                <PeriodSelector />
+                {/* <AbsolutePeriodSelector /> */}
             </CenteredContent>
         );
     }
@@ -27,7 +34,7 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         return (
             <CenteredContent>
                 <FiveDaysForecast />
-                <PeriodSelector />
+                {/* <AbsolutePeriodSelector /> */}
             </CenteredContent>
         );
     }

@@ -14,7 +14,9 @@ const DayContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  h2,h3,h4{
+    margin: 0;
+  }
 `;
 
 const InfoContainer = styled.div`
@@ -52,6 +54,7 @@ const FiveDaysForecast: React.FC = () => {
               H:{day.highestTemp}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}
               / L:{day.lowestTemp}{tempSuffix === 'K' ? "" : "°"}{tempSuffix}
             </h4>
+            &nbsp;
           </DayContainer>
         ))}
       </InfoContainer>
