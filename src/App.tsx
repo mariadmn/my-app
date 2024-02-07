@@ -1,4 +1,3 @@
-import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from 'styled-components';
 import Display from './components/display';

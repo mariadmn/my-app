@@ -1,7 +1,6 @@
 import React from "react";
 import FiveDaysForecast from "./5dayforecast";
 import CurrentForecast from "./currentForecast";
-import PeriodSelector from "./periodSelector";
 import styled from "styled-components";
 
 interface ForecastProps {
@@ -13,19 +12,11 @@ const CenteredContent = styled.div`
   text-align: center;
 `;
 
-const AbsolutePeriodSelector = styled(PeriodSelector)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-`;
-
 const Forecast: React.FC<ForecastProps> = (props) => {
     if(props.isCurrent === true){
         return (
             <CenteredContent>
                 <CurrentForecast />
-                {/* <AbsolutePeriodSelector /> */}
             </CenteredContent>
         );
     }
@@ -34,7 +25,6 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         return (
             <CenteredContent>
                 <FiveDaysForecast />
-                {/* <AbsolutePeriodSelector /> */}
             </CenteredContent>
         );
     }

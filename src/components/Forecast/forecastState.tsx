@@ -4,6 +4,7 @@ import { useCityState } from "../cityState";
 import { useEffect } from "react";
 import { create } from "zustand";
 
+//CHANGE TO YOUR API KEY
 const apiKey = '8d3b84bd38e936c4c5fbc9e1c6094240';
 
 type ForecastState = {
@@ -23,7 +24,7 @@ export const useForecastState = create<ForecastState>((set) => ({
 export function useForecast() {
   const { temperatureunits } = useSettings();
   const { selectedCity } = useCityState();
-  const { isCurrent, is5Days } = useForecastState();
+  const { isCurrent } = useForecastState();
 
   //Organizing the forecast data for 5 days forecast
   const organizeForecastData = (forecastData: any) => {
@@ -76,6 +77,8 @@ export function useForecast() {
   const forecastQuery = useQuery({
     queryFn: async () => {
       if (!selectedCity) return null;
+      console.log(selectedCity);
+      console.log(isCurrent);
       const nameQuery = isCurrent ? "weather" : "forecast";
 
       const apiUrl = `https://api.openweathermap.org/data/2.5/${nameQuery}?lat=${selectedCity.lat}&lon=${selectedCity.lon}&units=${temperatureunits}&appid=${apiKey}`;
@@ -100,5 +103,10 @@ export function useForecast() {
     forecastQuery.refetch();
   }, [selectedCity, temperatureunits]);
 
-  return forecastQuery;
+  return {
+    forecastQuery,
+    data: forecastQuery.data,
+    isLoading: forecastQuery.isLoading,
+    isError: forecastQuery.isError,
+  };
 }

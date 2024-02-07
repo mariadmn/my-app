@@ -1,7 +1,9 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseCircle } from '../../../assets/weather-icons/close-circle.svg';
 import { useCityState } from '../../cityState';
+import { useForecast, useForecastState } from '../../Forecast/forecastState';
+
 
 const StyledCloseCircle = styled(CloseCircle)`
   width: 11px; 
@@ -46,9 +48,11 @@ const Button = styled.button`
 `;
 
 const Search: React.FC<{isSearchVisible: boolean, onSearchToggle: () => void }> = ({ isSearchVisible, onSearchToggle }) => {
-  const { visibleCities, setSelectedCity, setVisibleCities } = useCityState();
+  const { visibleCities, setSelectedCity, setVisibleCities, selectedCity } = useCityState();
   const [ originalCities ] = useState(visibleCities);
   const [ searchInput, setSearchInput ] = useState('');
+  const { forecastQuery } = useForecast();
+  const { setIsCurrent, isCurrent } = useForecastState();
 
   const handleSearch = (input: string) => {
     if (input === '') {
@@ -67,6 +71,7 @@ const Search: React.FC<{isSearchVisible: boolean, onSearchToggle: () => void }> 
     );
     if (foundCity) {
       setSelectedCity(foundCity);
+      setIsCurrent(true);
     }
   };
 
@@ -86,6 +91,13 @@ const Search: React.FC<{isSearchVisible: boolean, onSearchToggle: () => void }> 
     event.preventDefault();
     handleCitySelection();
   };
+
+
+  useEffect(() => {
+    if (selectedCity) {
+      forecastQuery.refetch();
+    }
+  }, [selectedCity, isCurrent]);
 
   return (
     <SearchContainer>
