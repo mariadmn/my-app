@@ -2,21 +2,21 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const lightTheme = {
-  background: "#FFF",
-  text: "#000",
-  blue: "#0A84FF",
-  yellow: "#ffd60a",
-  purple: "#BF5AF2",
-  cyan: "#64D2FF",
+  background: '#FFF',
+  text: '#000',
+  blue: '#0A84FF',
+  yellow: '#ffd60a',
+  purple: '#BF5AF2',
+  cyan: '#64D2FF',
 };
 
 export const darkTheme = {
-  background: "#000",
-  text: "#FFF",
-  blue: "#0A84FF",
-  yellow: "#ffd60a",
-  purple: "#BF5AF2",
-  cyan: "#64D2FF",
+  background: '#000',
+  text: '#FFF',
+  blue: '#0A84FF',
+  yellow: '#ffd60a',
+  purple: '#BF5AF2',
+  cyan: '#64D2FF',
 };
 
 interface ThemeState {
@@ -25,9 +25,8 @@ interface ThemeState {
 }
 
 const getInitialTheme = (): typeof lightTheme | typeof darkTheme => {
-  const storedTheme =
-    typeof window !== "undefined" ? localStorage.getItem("theme") : null;
-  return storedTheme === "dark" ? lightTheme : darkTheme;
+  const storedTheme = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+  return (storedTheme === "dark" || storedTheme == null) ? lightTheme : darkTheme;
 };
 
 const useTheme= create<ThemeState>()(

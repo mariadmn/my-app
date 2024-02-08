@@ -77,8 +77,6 @@ export function useForecast() {
   const forecastQuery = useQuery({
     queryFn: async () => {
       if (!selectedCity) return null;
-      console.log(selectedCity);
-      console.log(isCurrent);
       const nameQuery = isCurrent ? "weather" : "forecast";
 
       const apiUrl = `https://api.openweathermap.org/data/2.5/${nameQuery}?lat=${selectedCity.lat}&lon=${selectedCity.lon}&units=${temperatureunits}&appid=${apiKey}`;

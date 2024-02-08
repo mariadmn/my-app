@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { useCityState } from "../cityState";
 import { Cities } from "../../assets/cities";
 import Button from "../button";
@@ -11,11 +11,15 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
+
 
 const CityGrid: React.FC = () => {
   const { visibleCities, setSelectedCity, selectedCity } = useCityState();
   const { setIsCurrent} = useForecastState();
+
   const handleCityClick = (city: Cities) => {
     setSelectedCity(city);
     setIsCurrent(true);

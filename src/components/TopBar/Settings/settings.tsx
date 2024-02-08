@@ -24,6 +24,8 @@ const ModalContainer = styled.div`
   width: 400px;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  background-color: ${({ theme }) => theme.theme.background};
+  border: 1px solid ${({ theme }) => theme.theme.blue};
 `;
 
 
@@ -35,20 +37,25 @@ const ColumnContainer = styled.div`
 
 const StyledModalTitle = styled.h2`
   text-align: center;
+  color: ${({ theme }) => theme.theme.text};
 `;
 ;
 
 const StyledButton = styled(Button)`
   flex: 1;
-  min-width: 80px; /* Adjust the minimum width as needed */
-  height: 30px; /* Set the height */
+  min-width: 80px; 
+  height: 30px; 
+`;
+
+const StyledText = styled.h4`
+  color: ${({ theme }) => theme.theme.text};
 `;
 
 const RowContainer = styled.div`
   display: flex;
   flex-direction: row; 
   justify-content: space-between;
-  gap: 10px; /* Add some gap between buttons */
+  gap: 10px; 
 `;
 
 type ModalProps = {
@@ -89,19 +96,22 @@ const Modal: React.FC<ModalProps> = (props) => {
       <ModalContainer>
         <StyledModalTitle>Settings</StyledModalTitle>
         <ColumnContainer>
-            <h4>Units</h4>
+            <StyledText>Units</StyledText>
             <RowContainer>
               <StyledButton
                 label={"Metric"}
                 onClick={() => (setTempUnits('metric'))}
+                isSelected={tempUnits === 'metric'}
               />
               <StyledButton
                 label={"Imperial"}
                 onClick={() => (setTempUnits('imperial'))}
+                isSelected={tempUnits === 'imperial'}
               />
               <StyledButton
                 label={"Standard"}
                 onClick={() => (setTempUnits('standard'))}
+                isSelected={tempUnits === 'standard'}
               />
             </RowContainer>
         </ColumnContainer>
@@ -111,10 +121,12 @@ const Modal: React.FC<ModalProps> = (props) => {
             <StyledButton
               label={"24H"}
               onClick={() => (setTempTimeFormat("24h"))}
+              isSelected={tempTimeFormat === "24h"}
             />
             <StyledButton
               label={"AM/PM"}
               onClick={() => (setTempTimeFormat("AM/PM"))}
+              isSelected={tempTimeFormat === "AM/PM"}
             />
           </RowContainer>
         </ColumnContainer>

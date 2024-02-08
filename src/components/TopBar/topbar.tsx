@@ -3,13 +3,15 @@ import Clock from "./Clock/clock";
 import Search from "./Search/search";
 import styled from "styled-components";
 import Modal from "./Settings/settings";
-import useTheme, { lightTheme } from "../../theme";
+import useTheme from "../../theme";
 import { ReactComponent as ThemeSwitch } from "../../assets/weather-icons/theme-switch.svg";
 
 const StyledTopBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const RightSection = styled.div`
@@ -25,20 +27,22 @@ const Button = styled.button`
   font-size: 16px;
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.theme.text};
 
   &:hover {
-    color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.theme.blue};
   }
 `;
 
 const StyledThemeSwitch = styled(ThemeSwitch)`
   width: 15px; 
   height: 15px; 
+  fill: ${({ theme }) => theme.theme.text};
 `;
 
 const ThemeSwitchButton = styled(Button)`
   margin-right: 10x; 
+  color: ${({ theme }) => theme.theme.text};
 `;
 
 const TopBar: React.FC = () => {
@@ -66,9 +70,9 @@ const TopBar: React.FC = () => {
           onSearchToggle={() => setIsSearchVisible(!isSearchVisible)}
         />
          <Button onClick={openModal}>Settings</Button>
-        {/* <ThemeSwitchButton type="button" onClick={toggleTheme}>
+        <ThemeSwitchButton type="button" onClick={toggleTheme}>
           <StyledThemeSwitch />
-        </ThemeSwitchButton> */}
+        </ThemeSwitchButton>
         <Modal isOpen={isModalOpen} onClose={closeModal} />
       </RightSection>
     </StyledTopBar>

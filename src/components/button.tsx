@@ -10,32 +10,28 @@ type ButtonProps = {
   isSelected?: boolean;
 };
 
-//TODO: change styling
 const StyledButton = styled.button<ButtonProps>`
-  background: ${({ theme }) => theme.backgorund};
-  border: 2px solid ${({ theme }) => theme.blue};
+  background: ${({ theme }) => theme.theme.background};
+  border: 2px solid ${({ theme }) => theme.theme.blue};
   width: 100%;
-  border-radius: 10px;
   padding: 14px;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.theme.text};
   cursor: pointer;
   transition: all 0.3s;
 
   &:hover {
-    background-color: ${({ theme }) => theme.text};
-    color: ${({ theme }) => theme.blue};
-    border-color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.theme.text};
+    color: ${({ theme }) => theme.theme.blue};
+    border-color: ${({ theme }) => theme.theme.text};
   }
 
   ${(props) =>
-    props.disabled === true &&
+    props.isSelected &&
     css`
-      background-color: ${({ theme }) => theme.text};
-      color: ${({ theme }) => theme.blue};
-      border-color: ${({ theme }) => theme.text};
-      cursor: not-allowed;
-  `}
-
+      color: ${({ theme }) => theme.theme.blue};
+      background-color: ${({ theme }) => theme.theme.text};
+    `}
+    
   ${(props) =>
     props.size === "sm" &&
     css`
@@ -53,9 +49,9 @@ const StyledButton = styled.button<ButtonProps>`
   ${(props) =>
     props.isStyled &&
     css`
-      background-color: ${({ theme }) => theme.text};
-      color: ${({ theme }) => theme.blue};
-      border-color: ${({ theme }) => theme.text};
+      background-color: ${({ theme }) => theme.theme.text};
+      color: ${({ theme }) => theme.theme.blue};
+      border-color: ${({ theme }) => theme.theme.text};
     `}
 `;
 

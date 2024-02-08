@@ -39,11 +39,11 @@ function App() {
   const theme = useTheme();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-      </ThemeProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

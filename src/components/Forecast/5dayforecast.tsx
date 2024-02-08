@@ -16,6 +16,7 @@ const DayContainer = styled.div`
   align-items: center;
   h2,h3,h4{
     margin: 0;
+    color: ${({ theme }) => theme.theme.text};
   }
 `;
 
@@ -26,6 +27,7 @@ const InfoContainer = styled.div`
   flex-direction: 'row';
   justify-content: 'space-between';
   align-content: 'center';
+  text-decoration-color: ${({ theme }) => theme.theme.text};
 `;
 
 const FiveDaysForecast: React.FC = () => {
@@ -48,6 +50,7 @@ const FiveDaysForecast: React.FC = () => {
         {data.map((day: any) => (
           <DayContainer key={day.date}>
             <h2>{day.dayOfWeek}</h2>
+            {/* gets the first main weather */}
             <WeatherIcon condition={day.forecastDetails[0].weather.main} />
             <h3>{day.forecastDetails[0].weather.main}</h3>
             <h4>

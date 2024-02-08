@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSettings } from '../Settings/settingsState';
+import { useTheme } from 'styled-components';
 
 const Clock: React.FC = () => {
   const { timeFormat } = useSettings();
   const [currentTime, setCurrentTime] = useState<string>('');
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true); 
+  const theme = useTheme();
 
   useEffect(() => {
     const updateTime = () => {
@@ -17,7 +19,7 @@ const Clock: React.FC = () => {
           : `${(hours % 12) || 12}:${minutes.toString().padStart(2, '0')} ${hours >= 12 ? 'PM' : 'AM'}`;
 
       setCurrentTime(formattedTime);
-      setLoading(false); // Mark the clock as loaded
+      setLoading(false); // Marks the clock as loaded
     };
 
     const intervalId = setInterval(updateTime, 1000);
@@ -27,7 +29,7 @@ const Clock: React.FC = () => {
   }, [timeFormat]);
 
   return (
-    <div style={{ fontSize: 12 }}>
+    <div style={{ fontSize: 12, color: theme.theme.text}}>
       {loading ? (
         <p>Loading Clock...</p>
       ) : (

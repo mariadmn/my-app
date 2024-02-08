@@ -13,6 +13,7 @@ const StyledCloseCircle = styled(CloseCircle)`
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  fill: ${({ theme }) => theme.theme.text};
 `;
 
 
@@ -21,9 +22,9 @@ const Input = styled.input`
   border: none;
   padding-right: 24px; 
   flex: 1;
-
+  color: ${({ theme }) => theme.theme.text};
   &::placeholder {
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.theme.text};
     opacity: 1;
   }
 `;
@@ -40,10 +41,10 @@ const Button = styled.button`
   font-size: 16px;
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.theme.text};
 
   &:hover {
-    color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.theme.blue};
   }
 `;
 

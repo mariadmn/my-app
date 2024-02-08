@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import Button from "../button";
 import { useCityState } from "../cityState";
 import { useForecastState } from "./forecastState";
@@ -15,20 +15,14 @@ const StyledContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  font-size: 14px; /* Adjust the font size as needed */
-  padding: 8px 16px; /* Adjust padding as needed */
+  font-size: 14px; 
+  padding: 8px 16px;
   transition: background-color 0.3s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.blue}; 
   }
 
-  ${({ isSelected, theme }) =>
-    isSelected &&
-    `
-    background-color: ${theme.blue}; 
-    color: ${theme.white};
-  `}
 `;
 
 const PeriodSelector: React.FC = () => {
@@ -36,6 +30,7 @@ const PeriodSelector: React.FC = () => {
   const location = useLocation();
   const { selectedCity } = useCityState();
   const { setIsCurrent, setIs5Days } = useForecastState();
+  const  theme = useTheme();
 
   const handleNowClick = () => {
     setIs5Days(false);
@@ -63,6 +58,7 @@ const PeriodSelector: React.FC = () => {
         style={{
           textAlign: "center",
           marginBottom: "1rem",
+          color: theme.theme.text,
         }}
       >
         Forecast
