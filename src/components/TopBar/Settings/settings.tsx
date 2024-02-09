@@ -65,7 +65,7 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = (props) => {
   const { timeFormat, temperatureunits, setTimeFormat, setUnits } = useSettings();
-  const { isOpen, onClose } = props;
+  const { onClose } = props;
   //Local Variables
   const [tempUnits, setTempUnits] = useState<TemperatureUnit>(temperatureunits);
   const [tempTimeFormat, setTempTimeFormat] = useState<string>(timeFormat);

@@ -59,7 +59,7 @@ const TopBar: React.FC = () => {
   };
 
   // Handle the theme
-  const { toggleTheme, theme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   return (
     <StyledTopBar>
