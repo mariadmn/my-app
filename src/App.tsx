@@ -6,8 +6,15 @@ import ErrorPage from './ErrorPage';
 import useTheme from './components/theme';
 import CurrentForecast from './components/Forecast/currentForecast';
 import FiveDaysForecast from './components/Forecast/5dayforecast';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    //if realoaded, reset the url
+    if (window.location.pathname !== '/') {
+      window.location.pathname = '/';
+    }
+  }, []); 
 
   const router = createBrowserRouter([
     {

@@ -19,6 +19,10 @@ export function useForecast() {
   
     // Group data by date
     forecastData.list.forEach((item : any) => {
+      //if the date is todays date then skip it
+      if (item.dt_txt.split(' ')[0] === new Date().toISOString().split('T')[0]) {
+        return;
+      }
       const date = item.dt_txt.split(' ')[0];
   
       if (!groupedData[date]) {
@@ -46,8 +50,8 @@ export function useForecast() {
         weather: item.weather[0],
       }));
   
-      // Determine day of the week
-      const dayOfWeek = new Date(dayData[0].dt * 1000).toLocaleDateString('en-US', { weekday: 'long' });
+      // Determine day of the week skipping today
+      const dayOfWeek = new Date(dayData[1].dt * 1000).toLocaleDateString('en-US', { weekday: 'long' });
   
       return {
         cityName,
@@ -78,6 +82,7 @@ export function useForecast() {
       if(!isCurrent){
         data = organizeForecastData(data);
       }
+
       return data;
     },
     enabled: !!selectedCity,
@@ -86,9 +91,9 @@ export function useForecast() {
   // Refetch forecast data when the selected city changes or the temperature units change
   useEffect(() => {
     if (forecastQuery) {
-      forecastQuery.refetch();
+      // forecastQuery.refetch();
     }
-  }, [selectedCity, temperatureunits, forecastQuery]);
+  }, [selectedCity, temperatureunits]);
 
   return forecastQuery;
 }

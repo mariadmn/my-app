@@ -75,7 +75,7 @@ const Modal: React.FC<ModalProps> = (props) => {
       setTempUnits(temperatureunits);
       setTempTimeFormat(timeFormat);
     }
-  }, [isOpen, temperatureunits, timeFormat]);
+  }, [props.isOpen, temperatureunits, timeFormat]);
 
   const saveSettings = () => {
     setUnits(tempUnits);

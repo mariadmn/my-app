@@ -51,7 +51,7 @@ const CurrentForecast: React.FC = () => {
 
     useEffect(() => {
         navigate("/");
-    }, []);
+    }, [navigate]);
 
     if (!data || Array.isArray(data)) {
         //data is an array of objects
