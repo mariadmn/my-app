@@ -88,7 +88,7 @@ export function useForecast() {
     if (forecastQuery) {
       forecastQuery.refetch();
     }
-  }, [selectedCity, temperatureunits]);
+  }, [selectedCity, temperatureunits, forecastQuery]);
 
   return forecastQuery;
 }

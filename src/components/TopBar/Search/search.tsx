@@ -99,7 +99,7 @@ const Search: React.FC<{isSearchVisible: boolean, onSearchToggle: () => void }> 
     if (selectedCity) {
       forecastQuery.refetch();
     }
-  }, [selectedCity, isCurrent]);
+  }, [selectedCity, isCurrent, forecastQuery]);
 
   return (
     <SearchContainer>
