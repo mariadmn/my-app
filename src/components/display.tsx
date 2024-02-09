@@ -1,10 +1,10 @@
 import CityGrid from "./CityGrid/cityGrid";
 import Forecast from "./Forecast/forecast";
-import { useForecastState } from "./Forecast/forecastState";
 import PeriodSelector from "./Forecast/periodSelector";
 import TopBar from "./TopBar/topbar";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import { useForecastState } from "./Forecast/useForecastState";
 
 const GlobalStyle = createGlobalStyle`
   body {

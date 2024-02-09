@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import Button from "../button";
 import { useCityState } from "../cityState";
-import { useForecastState } from "./forecastState";
+import { useForecastState } from "./useForecastState";
 
 
 const StyledContainer = styled.div`

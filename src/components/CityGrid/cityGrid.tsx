@@ -1,9 +1,9 @@
 import React from "react";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { useCityState } from "../cityState";
 import { Cities } from "../../assets/cities";
 import Button from "../button";
-import { useForecastState } from "../Forecast/forecastState";
+import { useForecastState } from "../Forecast/useForecastState";
 
 const GridContainer = styled.div`
   display: grid;
