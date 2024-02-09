@@ -2,7 +2,8 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseCircle } from '../../../assets/weather-icons/close-circle.svg';
 import { useCityState } from '../../cityState';
-import { useForecast, useForecastState } from '../../Forecast/forecastState';
+import { useForecast } from '../../Forecast/forecastState';
+import { useForecastState } from '../../Forecast/useForecastState';
 
 
 const StyledCloseCircle = styled(CloseCircle)`
@@ -52,7 +53,7 @@ const Search: React.FC<{isSearchVisible: boolean, onSearchToggle: () => void }> 
   const { visibleCities, setSelectedCity, setVisibleCities, selectedCity } = useCityState();
   const [ originalCities ] = useState(visibleCities);
   const [ searchInput, setSearchInput ] = useState('');
-  const { forecastQuery } = useForecast();
+  const forecastQuery = useForecast(); 
   const { setIsCurrent, isCurrent } = useForecastState();
 
   const handleSearch = (input: string) => {

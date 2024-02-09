@@ -2,24 +2,11 @@ import { useQuery } from "react-query";
 import { useSettings } from "../TopBar/Settings/settingsState";
 import { useCityState } from "../cityState";
 import { useEffect } from "react";
-import { create } from "zustand";
+import { useForecastState } from "./useForecastState";
 
 //CHANGE TO YOUR API KEY
 const apiKey = '8d3b84bd38e936c4c5fbc9e1c6094240';
 
-type ForecastState = {
-  isCurrent: boolean;
-  is5Days?: boolean;
-  setIsCurrent: (isCurrent: boolean) => void;
-  setIs5Days: (is5Days: boolean) => void;
-};
-
-export const useForecastState = create<ForecastState>((set) => ({
-  isCurrent: false,
-  is5Days: false,
-  setIsCurrent: (isCurrent) => set({ isCurrent }),
-  setIs5Days: (is5Days) => set({ is5Days }),
-}));
 
 export function useForecast() {
   const { temperatureunits } = useSettings();
@@ -75,13 +62,13 @@ export function useForecast() {
   };
 
   const forecastQuery = useQuery({
+    queryKey: [isCurrent ? "weather" : "forecast", selectedCity, "metric"],
     queryFn: async () => {
-      if (!selectedCity) return null;
       const nameQuery = isCurrent ? "weather" : "forecast";
+      if (!selectedCity) return null;
 
       const apiUrl = `https://api.openweathermap.org/data/2.5/${nameQuery}?lat=${selectedCity.lat}&lon=${selectedCity.lon}&units=${temperatureunits}&appid=${apiKey}`;
 
-      
       const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error('Failed to fetch weather data');
@@ -98,13 +85,10 @@ export function useForecast() {
 
   // Refetch forecast data when the selected city changes or the temperature units change
   useEffect(() => {
-    forecastQuery.refetch();
+    if (forecastQuery) {
+      forecastQuery.refetch();
+    }
   }, [selectedCity, temperatureunits]);
 
-  return {
-    forecastQuery,
-    data: forecastQuery.data,
-    isLoading: forecastQuery.isLoading,
-    isError: forecastQuery.isError,
-  };
+  return forecastQuery;
 }
