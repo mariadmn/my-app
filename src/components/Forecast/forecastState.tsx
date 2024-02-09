@@ -91,9 +91,9 @@ export function useForecast() {
   // Refetch forecast data when the selected city changes or the temperature units change
   useEffect(() => {
     if (forecastQuery) {
-      // forecastQuery.refetch();
+      forecastQuery.refetch();
     }
-  }, [selectedCity, temperatureunits]);
+  }, [selectedCity, temperatureunits, forecastQuery]);
 
   return forecastQuery;
 }
