@@ -25,8 +25,12 @@ interface ThemeState {
 }
 
 const getInitialTheme = (): typeof lightTheme | typeof darkTheme => {
-  const storedTheme = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
-  return (storedTheme === "dark" || storedTheme == null) ? lightTheme : darkTheme;
+  if (typeof window !== "undefined") {
+    const storedTheme = localStorage.getItem("theme");
+    return storedTheme === "dark" ? darkTheme : lightTheme;
+  } else {
+    return lightTheme;
+  }
 };
 
 const useTheme= create<ThemeState>()(
@@ -39,7 +43,7 @@ const useTheme= create<ThemeState>()(
         })),
     }),
     {
-      name: "theme-preference",
+      name: "theme-preferences",
     }
   )
 );

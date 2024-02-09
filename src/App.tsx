@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import Display from './components/display';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
-import useTheme from './theme';
+import useTheme from './components/theme';
 import CurrentForecast from './components/Forecast/currentForecast';
 import FiveDaysForecast from './components/Forecast/5dayforecast';
 

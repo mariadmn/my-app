@@ -19,7 +19,6 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         return (
             <CenteredContent>
                 <CurrentForecast />
-                {/* <PeriodSelector /> */}
             </CenteredContent>
         );
     }
@@ -28,7 +27,6 @@ const Forecast: React.FC<ForecastProps> = (props) => {
         return (
             <CenteredContent>
                 <FiveDaysForecast />
-                {/* <PeriodSelector /> */}
             </CenteredContent>
         );
     }

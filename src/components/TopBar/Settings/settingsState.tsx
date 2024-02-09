@@ -38,6 +38,6 @@ export const useSettings = create<SettingsState>()(
             set({ temperatureunits, tempSuffix: suffix });
         },
     }),
-    { name: "preferences" }
+    { name: "settings-preferences" }
   )
 );

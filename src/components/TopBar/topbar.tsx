@@ -3,7 +3,7 @@ import Clock from "./Clock/clock";
 import Search from "./Search/search";
 import styled from "styled-components";
 import Modal from "./Settings/settings";
-import useTheme from "../../theme";
+import useTheme from "../theme";
 import { ReactComponent as ThemeSwitch } from "../../assets/weather-icons/theme-switch.svg";
 
 const StyledTopBar = styled.div`
