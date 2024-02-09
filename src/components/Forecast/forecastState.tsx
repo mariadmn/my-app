@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { useForecastState } from "./useForecastState";
 
 //CHANGE TO YOUR API KEY
-const apiKey = 'your-api-key-here';
+const apiKey = 'bcbb71f3c3eeffd1b3cdac3d4c7029fb';
+
 
 
 export function useForecast() {
@@ -90,10 +91,10 @@ export function useForecast() {
 
   // Refetch forecast data when the selected city changes or the temperature units change
   useEffect(() => {
-    if (forecastQuery) {
+    if(forecastQuery){
       forecastQuery.refetch();
     }
-  }, [selectedCity, temperatureunits, forecastQuery]);
+  }, [selectedCity, temperatureunits]);
 
   return forecastQuery;
 }
