@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useForecastState } from "./useForecastState";
 
 //CHANGE TO YOUR API KEY
-const apiKey = '8d3b84bd38e936c4c5fbc9e1c6094240';
+const apiKey = 'your-api-key-here';
 
 
 export function useForecast() {
